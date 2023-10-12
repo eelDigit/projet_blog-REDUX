@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
+//composants_________
+import User from "./components/User";
+import PostForm from "./components/PostForm";
+import Post from "./components/Post";
+import { isEmpty } from "./components/Utils";
+
+//REDUX______________
+import { useSelector } from "react-redux";
+
+const App = () => {
+  const posts = useSelector(state => state.postReducer);
+
+  console.log("--------------", posts);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Wakfu</h1>
+
+      <PostForm />
+
+      <div className="content">
+        <div className="post_container">
+          {!isEmpty(posts) &&
+            posts.map((post, index) => <Post post={post} key={index} />)}
+        </div>
+        <User />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
